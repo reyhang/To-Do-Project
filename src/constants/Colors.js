@@ -1,0 +1,15 @@
+export default {
+    white:"white",
+    black:"black",
+    light_black:"#1a1a1a",
+    light_grey:"#e6e6e6",
+    dim_grey:"#696969",
+    gainsboro:"#DCDCDC",
+    light_blue:"#99CCFF",
+    cornflow_blue:"#6485ED",
+     peachy_pluff:"#FFDAB9",
+    dark_salmon:"#eda891",
+    light_pink:"#FFCCCC",
+    lila:"#cc99ff",
+    dark_sea_green:"#8fbc9b",
+}
