@@ -4,11 +4,14 @@ import CheckBox from '../components/CheckBox';
 import Input from '../components/Input';
 import {colors, fonts, images} from '../constants';
 import DeviceInfo from "react-native-device-info" 
-import { useDispatch} from 'react-redux';
-import {hideLoader, setUser, toggleLoader} from "../redux/system/actions"
-import I18n from '../i18n';
+import { useDispatch, useSelector} from 'react-redux';
+import {hideLoader, setLanguage, setUser, toggleLoader} from "../redux/system/actions"
+import I18n, { changeLanguage } from '../i18n';
 import CustomView from '../components/CustomView';
 import ButtonLogin from '../components/Button';
+import Dropdown from '../components/Dropdown';
+import axios from 'axios'
+import apiConfig from '../config/apiConfig';
 
 export default function LoginScreen() {
  
@@ -24,7 +27,7 @@ export default function LoginScreen() {
     surname:"Güney",
     password: 'html',
     title:"Mobil Developer",
-    displayName:"aimiss",
+    username:"aimiss",
     token:"5ac9GJdEdw8",
     mobile:"5058524163",
   });
@@ -39,9 +42,17 @@ export default function LoginScreen() {
     void setrememberMe(remember => !remember);
   };
 
+
   const onLogin = (data) => {
    
     dispatch(toggleLoader());
+
+    axios.post('http://31.145.39.254:6982/auth/login',{
+      username:'kerim',
+      password:"12345678"
+    }).then(response => console.log(response.data.accessToken))
+    .catch(e=>console.log(e))
+
     let kAdi = 'aimiss'
     let sifre = 'html' 
     if(kAdi ===data.username &&sifre ===data.password){
@@ -52,7 +63,7 @@ export default function LoginScreen() {
         surname:"Güney",
         password: 'html',
         title:"Mobil Developer",
-        displayName:"aimiss",
+        username:"aimiss",
         token:"5ac9GJdEdw8",
         mobile:"5058524163",
       }),
@@ -62,6 +73,17 @@ export default function LoginScreen() {
     }
     dispatch(hideLoader());
   };
+
+
+  const language = useSelector(state => state.system.language);
+
+  const handleLanguageChange = lang => {
+    if (lang) {
+      dispatch(setLanguage(lang));
+      changeLanguage(lang);
+    }
+  };
+
 
   const versionNumber = DeviceInfo.getVersion();
 
@@ -85,9 +107,9 @@ export default function LoginScreen() {
       </View>
       <View >
         <Input
-          onChangeText={text => onChangeText("displayName" , text)}
+          onChangeText={text => onChangeText("username" , text)}
           placeHolder={usernameText}
-          value={pageData.displayName}
+          value={pageData.username}
           icon={'mail-outline'}
           color={colors.light_pink}
           
@@ -112,12 +134,22 @@ export default function LoginScreen() {
           <View >
             <ButtonLogin 
               text={loginText}
-              onPress={() => onLogin({password:pageData.password,username:pageData.displayName})}
+              onPress={() => onLogin({password:pageData.password,username:pageData.username})}
             />
         </View>
       </View>
     </View>
     <View style={styles.versionNumberContainer}>
+
+    <Dropdown
+            items={[
+              {label: 'Türkçe', value: 'tr'},
+              {label: 'English', value: 'en'},
+            ]}
+            value={'en'}
+            placeholder="Select please."
+            onValueChange={val => handleLanguageChange(val)}
+          />
       <Text style={styles.versionNumberText}>{versionNumber}</Text> 
     </View>
   </CustomView>

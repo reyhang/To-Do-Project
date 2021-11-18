@@ -52,6 +52,7 @@ const styles = StyleSheet.create({
             height: '10%',
             fontWeight: 'bold',
             color: colors.dark_salmon,
+            
           },
           inputAndroid: {
             fontSize: fonts.f13,

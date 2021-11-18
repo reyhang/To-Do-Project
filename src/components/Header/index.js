@@ -34,14 +34,16 @@ export default function Header({title}) {
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 20,
-    marginBottom: 10,
+    marginHorizontal: 10,
+    marginBottom: 5,
+    
   },
   text: {
     fontSize: fonts.f20,
     fontWeight: 'bold',
     color: colors.peachy_pluff,
-    marginTop: 5,
+    marginBottom: 5,
     alignSelf: 'center',
   },
+  
 });
